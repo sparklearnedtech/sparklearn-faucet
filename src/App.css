@@ -24,8 +24,21 @@
   color: white;
 }
 
+.App-header-logo {
+  width: 170px;
+}
+
+.App-body {
+  display: flex;
+  margin-top: 5%;
+}
+
 .App-link {
   color: #61dafb;
+}
+
+.App-clickable {
+  cursor: pointer;
 }
 
 @keyframes App-logo-spin {

@@ -1,0 +1,27 @@
+name: Lint Code Base
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_NATURAL_LANGUAGE: false
+          VALIDATE_MARKDOWN: false
+          DEFAULT_BRANCH: develop
+          FILTER_REGEX_EXCLUDE: .*(static).*
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
