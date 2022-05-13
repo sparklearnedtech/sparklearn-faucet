@@ -19,7 +19,7 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     window.web3 = configureWeb3(
       `https://ropsten.infura.io/v3/${process.env.REACT_APP_INFURA_AK}`
     )
