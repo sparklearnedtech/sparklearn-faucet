@@ -396,11 +396,11 @@ class App extends React.Component {
                   console.log(rawTx)
 
                   // build tx
-                  const Tx = new window.ethTx(rawTx, { chain: 'ropsten' })
-                  Tx.sign(privateKey)
-                  console.log(Tx)
+                  const tx = window.ethTx(rawTx, { chain: 'ropsten' })
+                  tx.sign(privateKey)
+                  console.log(tx)
                   window.web3.eth.sendSignedTransaction(
-                    `0x${Tx.serialize().toString('hex')}`,
+                    `0x${tx.serialize().toString('hex')}`,
                     (err, receipt) => {
                       if (err) console.log(err)
                       else {
