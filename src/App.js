@@ -178,7 +178,7 @@ class App extends React.Component {
                 </div>
               </div>
               <div className="card-footer text-muted text-center">
-                <small>© <a href="" target="_blank" rel="noreferrer">SparkLearn EdTech Inc.</a></small>
+                <small>© <a href="https://sparklearn-edtech.com/" target="_blank" rel="noreferrer">SparkLearn EdTech Inc.</a></small>
               </div>
             </div>
           </div>
