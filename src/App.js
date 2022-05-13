@@ -80,7 +80,7 @@ class App extends React.Component {
         this.estimateGasLimit("0xca84b6581d325e6a497d875c4ca093ac3ba2ccaf", this.state.input_address, "10").then((g) => {
           window.web3.eth.getTransactionCount("0xca84b6581d325e6a497d875c4ca093ac3ba2ccaf", "pending", (error, txCount) => {
             if (error){
-              console.log(error);
+              //console.log(error);
               this.setState({ is_error: true, error_message: "Something has occurred. Please try again." });
             } else {
               // prepare tx
@@ -91,23 +91,24 @@ class App extends React.Component {
               rawTx.gasLimit = window.web3.utils.toHex(g.gasLimit);
               rawTx.gasPrice = window.web3.utils.toHex(global.web3.utils.toWei(this.state.gas_price, "ether"));
               rawTx.nonce = window.web3.utils.toHex(txCount);
-              console.log(rawTx);
+              //console.log(rawTx);
 
               // build tx
               const tx = new window.ethTx(rawTx, { chain: "ropsten" });
               tx.sign(privateKey);
-              console.log(tx);
+              //console.log(tx);
               window.web3.eth.sendSignedTransaction(`0x${tx.serialize().toString("hex")}`, (err, receipt) => {
-                if (err)
-                  console.log(err);
-                else{
-                  console.log(receipt.toString());
+                if (err){
+                  //console.log(err);
+                  this.setState({ is_error: true, error_message: "Something has occurred. Please try again." });
+                } else{
+                  //console.log(receipt.toString());
                   this.setState({ input_address: "", is_success: true, success_hash: receipt.toString(), success_message: "Sending 10 rSRK. Please wait for a few minutes." });
                 }
               });
             }
           }).catch((error) => {
-            console.log(error);
+            //console.log(error);
             this.setState({ is_error: true, error_message: "Something has occurred. Please try again." });
           });
         });
