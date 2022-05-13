@@ -94,10 +94,10 @@ class App extends React.Component {
               console.log(rawTx);
 
               // build tx
-              const tx = new window.ethTx(rawTx, { chain: "ropsten" });
-              tx.sign(privateKey);
-              console.log(tx);
-              window.web3.eth.sendSignedTransaction(`0x${tx.serialize().toString("hex")}`, (err, receipt) => {
+              const Tx = new window.ethTx(rawTx, { chain: "ropsten" });
+              Tx.sign(privateKey);
+              console.log(Tx);
+              window.web3.eth.sendSignedTransaction(`0x${Tx.serialize().toString("hex")}`, (err, receipt) => {
                 if (err)
                   console.log(err);
                 else{
