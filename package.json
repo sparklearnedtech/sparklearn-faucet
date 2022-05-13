@@ -1,6 +1,7 @@
 {
   "name": "sparklearn-faucet",
   "version": "0.1.0",
+  "homepage": "http://faucet.sparklearn-edtech.com",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -16,6 +17,8 @@
     "web3": "^1.4.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
