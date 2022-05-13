@@ -177,10 +177,10 @@ class App extends React.Component {
             { name: 'data', type: 'bytes' }
           ],
           name: 'approveAndCall',
-          outputs: [{ name: 'success', type: 'bool' }],
           payable: false,
-          stateMutability: 'nonpayable',
-          type: 'function'
+          outputs: [{ name: 'success', type: 'bool' }],
+          type: 'function',
+          stateMutability: 'nonpayable'
         },
         {
           constant: true,
@@ -300,11 +300,11 @@ class App extends React.Component {
   }
 
   fetchGasPrice () {
-    let that = this
+    const that = this
     axios
       .get('https://ethgasstation.info/json/ethgasAPI.json')
       .then(function (g) {
-        let fastest = window.web3.utils.fromWei(
+        const fastest = window.web3.utils.fromWei(
           window.web3.utils.toWei((g.data.fastest / 10).toString(), 'gwei'),
           'ether'
         )
@@ -333,7 +333,7 @@ class App extends React.Component {
       const amountInHex = window.web3.utils.toHex(
         window.web3.utils.toWei(amount, 'ether')
       )
-      let tx = {
+      const tx = {
         from: fromAddress,
         to: window.token._address,
         data: window.token.methods.transfer(toAddress, amountInHex).encodeABI()
@@ -384,7 +384,7 @@ class App extends React.Component {
                   })
                 } else {
                   // prepare tx
-                  let rawTx = {}
+                  const rawTx = {}
                   rawTx.from = '0xca84b6581d325e6a497d875c4ca093ac3ba2ccaf'
                   rawTx.to = window.token._address
                   rawTx.data = g.data
