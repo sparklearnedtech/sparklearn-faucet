@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import {configureWeb3} from './lib';
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 import logo from './images/logo.png';
 const axios = require('axios').default;
 
@@ -134,48 +136,98 @@ class App extends React.Component {
                 <h3>SparkLearn EdTech rSRK Faucet</h3>
               </div>
               <div className="card-body">
-                <center><small>Remaining faucet balance: {this.state.balance} rSRK</small></center><br/>
-                <form>
-                  <div className="container">
-                    <div className="row">
-                      <div className="form-group col-12">
-                        <input type="name" value={this.state.input_address} className="form-control" onChange={(e) => this.handleInput("input_address", e)} placeholder="Enter address to receive funds here" />
-                      </div>
-                      <div className="col-12">
-                        { this.state.is_success &&
-                          [
-                            <br key={0} />,
-                            <div key={1} className="alert alert-success">
-                              <strong>Success!</strong>{ " " + this.state.success_message }
-                              <br/><a href={"https://ropsten.etherscan.io/tx/" + this.state.success_hash} target="_blank" rel="noreferrer">{ "https://ropsten.etherscan.io/tx/" + this.state.success_hash }</a>
-                            </div>
-                          ]
-                        }
-                        { this.state.is_error &&
-                          [
-                            <br key={0} />,
-                            <div key={1} className="alert alert-danger">
-                              <strong>Error!</strong> { this.state.error_message }
-                            </div>
-                          ]
-                        }
-                      </div>
-                    </div>
-                  </div>
-                </form>
-                <br/>
-                <center><button className="btn btn-primary" onClick={this.sendFaucetToken.bind(this)}>Request 10 rSRK</button></center>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-12">
-                        <br/>
-                        <div key={1} className="alert alert-warning">
-                          <strong>Did not receive your rSRK?</strong><br/>
-                          EVM blockchains in general and Ropsten in particular are incredibly fragile, unreliable and hostile environments. Transactions do get lost, sometimes fail to mine, gas limits are estimated incorrectly, network explorer loses records, and Infura sometimes misreport nonces.
+                <Tabs defaultActiveKey="first">
+                  <Tab eventKey="first" title="ETH Ropsten">
+                    <br/>
+                    <center><small>Remaining faucet balance: {this.state.balance} rSRK</small></center><br/>
+                    <form>
+                      <div className="container">
+                        <div className="row">
+                          <div className="form-group col-12">
+                            <input type="name" value={this.state.input_address} className="form-control" onChange={(e) => this.handleInput("input_address", e)} placeholder="Enter address to receive funds here" />
+                          </div>
+                          <div className="col-12">
+                            { this.state.is_success &&
+                              [
+                                <br key={0} />,
+                                <div key={1} className="alert alert-success">
+                                  <strong>Success!</strong>{ " " + this.state.success_message }
+                                  <br/><a href={"https://ropsten.etherscan.io/tx/" + this.state.success_hash} target="_blank" rel="noreferrer">{ "https://ropsten.etherscan.io/tx/" + this.state.success_hash }</a>
+                                </div>
+                              ]
+                            }
+                            { this.state.is_error &&
+                              [
+                                <br key={0} />,
+                                <div key={1} className="alert alert-danger">
+                                  <strong>Error!</strong> { this.state.error_message }
+                                </div>
+                              ]
+                            }
+                          </div>
                         </div>
                       </div>
-                  </div>
-                </div>
+                    </form>
+                    <br/>
+                    <center><button className="btn btn-primary" onClick={this.sendFaucetToken.bind(this)}>Request 10 rSRK</button></center>
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-12">
+                          <br/>
+                          <div key={1} className="alert alert-warning">
+                            <strong>Did not receive your rSRK?</strong><br/>
+                            EVM blockchains in general and Ropsten in particular are incredibly fragile, unreliable and hostile environments. Transactions do get lost, sometimes fail to mine, gas limits are estimated incorrectly, network explorer loses records, and Infura sometimes misreport nonces.
+                          </div>
+                        </div>
+                        <div className="col-12">
+                          <div key={1} className="alert alert-danger">
+                            <strong>Warning!</strong><br/>
+                            Ropsten is shutting down Q4 of 2022. More info <a href="https://blog.ethereum.org/2022/06/21/testnet-deprecation/" target="_blank" rel="noreferrer">here</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Tab>
+                  <Tab eventKey="second" title="ETH Goerli">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-12">
+                          <br/>
+                          <div key={1} className="alert alert-info">
+                            <strong>Coming Soon!</strong><br/>
+                            This feature is still under development.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Tab>
+                  <Tab eventKey="third" title="BSC Testnet">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-12">
+                          <br/>
+                          <div key={1} className="alert alert-info">
+                            <strong>Coming Soon!</strong><br/>
+                            This feature is still under development.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Tab>
+                  <Tab eventKey="fourth" title="MATIC Mumbai">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-12">
+                          <br/>
+                          <div key={1} className="alert alert-info">
+                            <strong>Coming Soon!</strong><br/>
+                            This feature is still under development.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Tab>
+                </Tabs>
               </div>
               <div className="card-footer text-muted text-center">
                 <small>© <a href="https://sparklearn-edtech.com/" target="_blank" rel="noreferrer">SparkLearn EdTech Inc.</a></small>
