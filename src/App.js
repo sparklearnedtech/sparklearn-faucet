@@ -13,6 +13,7 @@ class App extends React.Component {
       balance: 0,
       gas_price: 0,
       input_address: "",
+      input_passcode: "",
       success_text: "",
       success_hash: "",
       error_text: "",
@@ -35,7 +36,7 @@ class App extends React.Component {
       let fastest = window.web3.utils.fromWei(window.web3.utils.toWei((g.data.fastest / 10).toString(), "gwei"), "ether");
       that.setState({ gas_price: fastest })
     }).catch(function (error) {
-      console.log(error);
+      //console.log(error);
     });
   }
 
@@ -76,13 +77,15 @@ class App extends React.Component {
     
     if (this.state.input_address === "") {
       this.setState({ is_error: true, error_message: "Please input all fields." });
+    } else if(this.state.input_passcode !== process.env.REACT_APP_Password) {
+      this.setState({ is_error: true, error_message: "Wrong passcode." });
     } else {
       if (window.web3.utils.isAddress(this.state.input_address)) {
         const privateKey = new Buffer.from(process.env.REACT_APP_FAUCET_PK, "hex");
         this.estimateGasLimit("0xca84b6581d325e6a497d875c4ca093ac3ba2ccaf", this.state.input_address, "10").then((g) => {
           window.web3.eth.getTransactionCount("0xca84b6581d325e6a497d875c4ca093ac3ba2ccaf", "pending", (error, txCount) => {
             if (error){
-              console.log(error);
+              //console.log(error);
               this.setState({ is_error: true, error_message: "Something has occurred. Please try again." });
             } else {
               // prepare tx
@@ -101,16 +104,16 @@ class App extends React.Component {
               //console.log(tx);
               window.web3.eth.sendSignedTransaction(`0x${tx.serialize().toString("hex")}`, (err, receipt) => {
                 if (err){
-                  console.log(err);
+                  //console.log(err);
                   this.setState({ is_error: true, error_message: "Something has occurred. Please try again." });
                 } else{
                   //console.log(receipt.toString());
-                  this.setState({ input_address: "", is_success: true, success_hash: receipt.toString(), success_message: "Sending 10 test SRK. Please wait for a few minutes." });
+                  this.setState({ input_address: "", input_passcode: "", is_success: true, success_hash: receipt.toString(), success_message: "Sending 10 test SRK. Please wait for a few minutes." });
                 }
               });
             }
           }).catch((error) => {
-            console.log(error);
+            //console.log(error);
             this.setState({ is_error: true, error_message: "Something has occurred. Please try again." });
           });
         });
@@ -156,8 +159,11 @@ class App extends React.Component {
                     <form>
                       <div className="container">
                         <div className="row">
-                          <div className="form-group col-12">
-                            <input type="name" value={this.state.input_address} className="form-control" onChange={(e) => this.handleInput("input_address", e)} placeholder="Enter address to receive funds here" />
+                          <div className="form-group col-6">
+                            <input type="name" className="form-control form-control-lg" value={this.state.input_passcode} onChange={(e) => this.handleInput("input_passcode", e)} placeholder="Passcode" />
+                          </div>
+                          <div className="form-group col-6">
+                            <input type="name" value={this.state.input_address} className="form-control form-control-lg" onChange={(e) => this.handleInput("input_address", e)} placeholder="Enter address to receive funds here" />
                           </div>
                           <div className="col-12">
                             { this.state.is_success &&
@@ -187,9 +193,13 @@ class App extends React.Component {
                       <div className="row">
                         <div className="col-12">
                           <br/>
+                          <div className="alert alert-warning">
+                            <strong>Why is there a passcode?</strong><br/>
+                            For now, we only allow and limit the access of this faucet to <a href="https://lrn.ac/bdb" target="_blank" rel="noreferrer">BDB 2022</a> students. As for the passcode, mentor <code>harvz</code> will provide it on <code>🔒bdb2022</code> Slack channel.
+                          </div>
                           <div key={1} className="alert alert-warning">
                             <strong>Did not receive your test SRK?</strong><br/>
-                            EVM blockchains in general and Ropsten in particular are incredibly fragile, unreliable and hostile environments. Transactions do get lost, sometimes fail to mine, gas limits are estimated incorrectly, network explorer loses records, and Infura sometimes misreport nonces.
+                            EVM blockchains in general and Goerli in particular are incredibly fragile, unreliable and hostile environments. Transactions do get lost, sometimes fail to mine, gas limits are estimated incorrectly, network explorer loses records, and Infura sometimes misreport nonces.
                           </div>
                         </div>
                       </div>
